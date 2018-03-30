@@ -46,7 +46,7 @@ class LearningAgent(Agent):
         else:
             self.iteration += 1
             #self.epsilon = 1/self.iteration
-            self.epsilon -= 0.05
+            self.epsilon -= 0.005
 
         return None
     
