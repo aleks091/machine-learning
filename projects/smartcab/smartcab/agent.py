@@ -43,10 +43,10 @@ class LearningAgent(Agent):
         if testing:
             self.epsilon = 0
             self.alpha = 0
-        else:
+        elif self.epsilon > 0:
             self.iteration += 1
             #self.epsilon = 1/self.iteration
-            self.epsilon -= 0.005
+            self.epsilon -= 0.05
 
         return None
     
@@ -123,8 +123,7 @@ class LearningAgent(Agent):
         # Set the agent state and default action
         self.state = state
         self.next_waypoint = self.planner.next_waypoint()
-        #action = random.choice(self.valid_actions)
-
+        
         ########### 
         ## TO DO ##
         ###########
@@ -136,13 +135,13 @@ class LearningAgent(Agent):
         if not self.learning:
             return random.choice(self.valid_actions)
 
-        #if state not in self.Q:
-            #self.createQ(state)
-
-        Q_state = self.Q[state]
-        maximum_value = max(Q_state.values())
-        action = random.choice([k for (k, v) in Q_state.items() if v == maximum_value])
-        return action
+        if random.random() < self.epsilon:
+            return random.choice(self.valid_actions)
+        else:
+            Q_state = self.Q[state]
+            maximum_value = max(Q_state.values())
+            action = random.choice([k for (k, v) in Q_state.items() if v == maximum_value])
+            return action
 
 
     def learn(self, state, action, reward):
@@ -155,8 +154,6 @@ class LearningAgent(Agent):
         ###########
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
-        #if self.state not in self.Q:
-            #self.createQ(state)
 
         Q_state = self.Q[state]
         Q_state[action] += reward + self.alpha * Q_state[action]
