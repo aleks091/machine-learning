@@ -71,9 +71,10 @@ class LearningAgent(Agent):
         # and thus learn about the balance between exploration and exploitation.
         # With the hand-engineered features, this learning process gets entirely negated.
         
-        # Set 'state' as a tuple of relevant data for the agent        
-        #state = waypoint, inputs
-        state = (waypoint,) + tuple(inputs.values()) 
+        # Set 'state' as a tuple of relevant data for the agent      
+
+        #state = (waypoint,) + tuple(inputs.values()) 
+        state = (waypoint,inputs['light'],inputs['oncoming'])
 
         return state
 
