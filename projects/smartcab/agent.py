@@ -164,7 +164,7 @@ class LearningAgent(Agent):
             return
 
         Q_state = self.Q[state]
-        Q_state[action] = (1 - self.alpha) * Q_state[action] + self.alpha * reward
+        Q_state[action] += self.alpha * (reward + Q_state[action])
 
         return
 
